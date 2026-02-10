@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const UseStatePractice = () => {
-    const [count, setCount] = useState(20);
+
     const [userData, setUserData] = useState(
         [
             {
@@ -127,22 +127,6 @@ const UseStatePractice = () => {
         ]
     )
 
-    console.log("rendering...");
-    let handleClick = () => {   //its called batching react batch the all setCOunt and call only first line and ignore other line cos other line are same .
-        setCount(count + 1);
-        setCount(count + 1);
-        setCount(count + 1); //output - 21
-        // setCount((prev) => prev + 1);
-        // setCount((prev) => prev + 1);
-        // setCount((prev) => prev + 1); //output - 23  prev- is 20 and its update the count and call the next line and update the count and call the next line and update the count.
-    }
-    let handleClick2 = () => {   //here its run all lines and update the count and overrite it.
-        setCount(count + 1);
-        setCount(count + 2);
-        setCount(count + 3); //23
-
-    }
-
     //function for deleteing card item 
     const deleteUser = (id) => {
         let newData = userData.filter((item) => {
@@ -154,10 +138,6 @@ const UseStatePractice = () => {
     console.log(userData);
     return (
         <>
-            {/* <div>useState Practice</div>
-            <div>
-                {count}
-            </div> */}
             <button onClick={handleClick} style={{ background: "red", color: "black" }}>Click me</button>
 
             {
@@ -178,9 +158,41 @@ const UseStatePractice = () => {
                     )
                 })
             }
-
-
         </>
     )
 }
 export default UseStatePractice;
+
+
+
+//react batching-------
+export const App = () => {
+
+    const [count, setCount] = useState(20);
+
+    console.log("rendering...");
+    let handleClick = () => {
+        //its called batching react batch the all setCOunt and call only first line and ignore other line cos other line are same .
+        setCount(count + 1);
+        setCount(count + 1);
+        setCount(count + 1); //output - 21
+
+        //Correct way (when next state depends on previous state)  
+        setCount((prev) => prev + 1);
+        setCount((prev) => prev + 1);
+        setCount((prev) => prev + 1); //output - 23  
+        // prev is 20 and its update the count and call the next line and update the count and call the next line and update the count.
+    }
+    let handleClick2 = () => {   //batching perform, here its run all lines and update the count and overrite it.
+        setCount(count + 1);
+        setCount(count + 2);
+        setCount(count + 3); //23
+    }
+    return (
+        <>
+            <div>
+                React bacthing. {count}
+            </div>
+        </>
+    )
+}
