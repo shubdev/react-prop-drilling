@@ -12,7 +12,7 @@ function App(props) {
       {/* <Parent /> */}
       {/* project2 */}
       {/* <UseStatePractice /> */}
-      <AppProjectB />
+      {/* <AppProjectB /> */}
 
       <TwoWayBinding />
 

@@ -1,52 +1,76 @@
-import React from 'react'
+import { useState } from "react";
+import "./TwoWayBinding.css";
 
 const TwoWayBinding = () => {
-
-    let [formData, setFormData] = useState({ name: "shub", email: "shub@gmail.com", number: "1234567" })
-
-    console.log("formdata....", formData);
-
+    const [formData, setFormData] = useState({
+        name: "shub",
+        email: "shub@gmail.com",
+    });
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("tedxt stream feature");
+        alert(`Submitted!\nName: ${formData.name}\nEmail: ${formData.email}`);
+    };
 
-    }
+    {/* State to UI (One-way binding): The value attribute of a form element is bound to a component's state variable. This means that if the state changes, the input field's displayed value automatically updates.
+    //UI to State (Event handling): An onChange event handler is attached to the input element. When the user types or makes a change, this handler is triggered */}
     return (
-        <>
+        <div className="page">
+            <div className="card">
+                <h2>User Profile</h2>
+                <p>State ↔ UI synced in real-time</p>
 
-            {/* State to UI (One-way binding): The value attribute of a form element is bound to a component's state variable. This means that if the state changes, the input field's displayed value automatically updates.
-            UI to State (Event handling): An onChange event handler is attached to the input element. When the user types or makes a change, this handler is triggered */}
+                {/* Live state preview — watch it update as you type */}
+                <div className="live-preview">
+                    <div className="live-preview-title">📡 Live State (formData)</div>
+                    <div className="live-preview-row">
+                        <span>name</span>
+                        <span>"{formData.name}"</span>
+                    </div>
+                    <div className="live-preview-row">
+                        <span>email</span>
+                        <span>"{formData.email}"</span>
+                    </div>
+                </div>
 
-            <form onSubmit={(e) => {
-                handleSubmit(e)
-            }}>
-                <input type='text'
-                    placeholder='name'
-                    value={formData.name}   // two way binding 
-                    onChange={(event) => {
-                        setFormData({ ...formData, name: event.target.value })
-                        console.log("input", event)
-                    }} /><br />
+                <form onSubmit={handleSubmit}>
 
-                <input type='eamil'
-                    placeholder='email'
-                    value={formData.email}
-                    onChange={(event) => {
-                        setFormData({ ...formData, email: event.target.value })
-                    }} /><br />
-                <input type='text'
-                    placeholder='number'
-                    value={formData.number}
-                    onChange={(event) => {
-                        setFormData({ ...formData, number: event.target.value })
-                    }} /><br />
+                    {/* NAME */}
+                    <div className="field-group">
+                        <label>Name</label>
+                        <div className="input-wrapper">
+                            <span>👤</span>
+                            <input
+                                type="text"
+                                placeholder="Enter name"
+                                value={formData.name}                           // State → UI
+                                onChange={(e) =>                                // UI → State
+                                    setFormData({ ...formData, name: e.target.value })
+                                } // Keeps email & number intact and Only overwrites `name`.
+                            />
+                        </div>
+                    </div>
 
-                <button type='submit'>Submit</button>
-            </form >
-
-
-        </>
-    )
-}
-
-export default TwoWayBinding
+                    {/* EMAIL */}
+                    <div className="field-group">
+                        <label>Email</label>
+                        <div className="input-wrapper">
+                            <span>✉️</span>
+                            <input
+                                type="email"
+                                placeholder="Enter email"
+                                value={formData.email}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, email: e.target.value })
+                                }
+                            />
+                        </div>
+                    </div>
+                    <button type="submit" className="submit-btn">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};
+export default TwoWayBinding;
