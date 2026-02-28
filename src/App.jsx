@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import TwoWayBinding from './projects/reactformEvent/TwoWayBinding';
 import ContextAPP from './projects/context API/ContextAPP';
 import FechData from './FechData';
+import OptimizeParent from './projects/performanceOptimizationHooks/OptimizeParent';
 function App(props) {
 
   return (
@@ -19,7 +20,9 @@ function App(props) {
 
       {/* <TwoWayBinding /> */}
       {/* <ContextAPP /> */}
-      <FechData />
+      {/* <FechData /> */}
+
+      <OptimizeParent />
 
 
     </>
